@@ -1,0 +1,21 @@
+[
+  {
+    "name": "${container_name}",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${logs_group}",
+        "awslogs-region": "ap-northeast-1",
+        "awslogs-stream-prefix": "fargate"
+      }
+    },
+    "network_mode": "awsvpc",
+    "portMappings": [
+      {
+        "containerPort": 8080
+      }
+    ],
+    "image": "${image}",
+    "essential": true
+  }
+]
