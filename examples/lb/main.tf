@@ -7,7 +7,8 @@ provider "aws" {
 
 variable "vpc_id" {}
 variable "service_subnet_id" {}
-variable "lb_subnet_id" {}
+variable "lb_subnet_id_1" {}
+variable "lb_subnet_id_2" {}
 
 # -------------------------------
 #  Fargate Module
@@ -93,7 +94,7 @@ resource "aws_alb" "main" {
   name               = "hoge"
   internal           = false
   load_balancer_type = "application"
-  subnets            = ["${var.lb_subnet_id}"]
+  subnets            = ["${var.lb_subnet_id_1}", "${var.lb_subnet_id_2}"]
 }
 
 resource "aws_alb_listener" "http" {
