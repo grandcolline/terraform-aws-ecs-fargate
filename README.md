@@ -4,7 +4,7 @@
 
 ## Description
 
-This is Simple ECS Fargate Service Module.
+This is Minimal ECS Fargate Service Module.
 These types of resources are supported:
 * [aws\_ecs\_service](https://www.terraform.io/docs/providers/aws/r/ecs_service.html)
 * [aws\_security\_group](https://www.terraform.io/docs/providers/aws/r/security_group.html)
