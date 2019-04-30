@@ -37,7 +37,7 @@ These types of resources are supported:
 ```hcl
 module "fargate" {
   source              = "grandcolline/ecs-fargate/aws"
-  version             = "v0.1.0"
+  version             = "0.1.0"
   service_name        = "FargateTestService"
   cluster_name        = "${aws_ecs_cluster.main.name}"
   task_definition_arn = "${aws_ecs_task_definition.main.arn}"
