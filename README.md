@@ -6,6 +6,7 @@
 
 This is Minimal ECS Fargate Service Module.
 These types of resources are supported:
+
 * [aws\_ecs\_service](https://www.terraform.io/docs/providers/aws/r/ecs_service.html)
 * [aws\_security\_group](https://www.terraform.io/docs/providers/aws/r/security_group.html)
 
@@ -14,11 +15,13 @@ These types of resources are supported:
 #### Load Balancer
 
 `type = lb` is create target group and connect to ecs\_service.
+
 * [aws\_lb\_target\_group](https://www.terraform.io/docs/providers/aws/r/lb_target_group.html)
 
 #### Private Service Discovery
 
 `type = sd` is create private service discovery and connect to ecs\_service.
+
 * [aws\_service\_discovery\_service](https://www.terraform.io/docs/providers/aws/r/service_discovery_service.html)
 
 #### Nothing
@@ -37,7 +40,7 @@ These types of resources are supported:
 ```hcl
 module "fargate" {
   source              = "grandcolline/ecs-fargate/aws"
-  version             = "0.1.0"
+  version             = "0.2.0"
   service_name        = "FargateTestService"
   cluster_name        = "${aws_ecs_cluster.main.name}"
   task_definition_arn = "${aws_ecs_task_definition.main.arn}"
@@ -52,7 +55,13 @@ module "fargate" {
 
 ## Inputs
 
-#### Fargate Variables
+### AWS Variables
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| region | AWS Region | string | `"ap-northeast-1"` | no |
+
+### Fargate Variables
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
@@ -63,46 +72,51 @@ module "fargate" {
 | type | fargate service type. load balancer or service discovery or nothing (lb/sd/no) | string | `"no"` | no |
 | deployment\_maximum\_percent | maximum percent when deploy | string | `"200"` | no |
 | deployment\_minimum\_healthy\_percent | minimum percent when deploy | string | `"50"` | no |
-| assign\_public\_ip | assign public ip to the task (true/false) | string | `"false"` | no |
+| assign\_public\_ip | assign public ip to the task | bool | `"false"` | no |
 
-#### Network Variables
+### Network Variables
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | vpc\_id | vpc's id | string | n/a | yes |
 | service\_subnets | List of subnet id's to put the task on | list | n/a | yes |
 
-#### Load Balancer Variables (`type = lb`)
+### Load Balancer Variables (`type = lb`)
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | container\_name | container's name to which target group connect | string | `""` | no |
 | container\_port | container's port to which target group connect | string | `"8080"` | no |
 | deregistration\_delay | time for load balancing to wait before deregistering a target | string | `"300"` | no |
-| healthcheck | target group healthcheck configration | map | `<map>` | no |
 | lb\_dns | load balancer's dns | string | `""` | no |
+| healthy\_threshold | | string | `"2"` | no |
+| unhealthy\_threshold | | string | `"5"` | no |
+| healthcheck\_timeout | | string | `"5"` | no |
+| healthcheck\_protocol | | string | `"HTTP"` | no |
+| healthcheck\_path | | string | `"/hc"` | no |
+| healthcheck\_interval | | string | `"30"` | no |
+| healthcheck\_matcher | | string | `"200"` | no |
 
-#### Service Discovery Variables (`type = sd`)
+### Service Discovery Variables (`type = sd`)
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | dns\_namespace\_id || string | `""` | no |
 | dns\_ttl || string | `"10"` | no |
 
-#### Auto Scalling Variables
+### Auto Scalling Variables
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | task\_max\_count | task's maximum capacity | string | `"2"` | no |
-| is\_mem\_scale | scale task by memory usage (true/false) | string | `"false"` | no |
+| is\_mem\_scale | scale task by memory usage | bool | `"false"` | no |
 | mem\_target\_value | target value of scale task by memory usage (%) | string | `"40"` | no |
 | mem\_scale\_in\_cooldown | cool down time of scale in task by memory usage | string | `"300"` | no |
 | mem\_scale\_out\_cooldown | cool down time of scale out task by memory usage | string | `"300"` | no |
-| is\_cpu\_scale | scale task by cpu usage (true/false) | string | `"false"` | no |
+| is\_cpu\_scale | scale task by cpu usage | bool | `"false"` | no |
 | cpu\_target\_value | target value of scale task by cpu usage (%) | string | `"40"` | no |
 | cpu\_scale\_in\_cooldown | cool down time of scale in task by cpu usage | string | `"300"` | no |
 | cpu\_scale\_out\_cooldown | cool down time of scale out task by cpu usage | string | `"300"` | no |
-
 
 ## Outputs
 

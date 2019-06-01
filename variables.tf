@@ -1,53 +1,62 @@
 # ----------------------------
+#  AWS Setting
+# ----------------------------
+variable "region" {
+  type        = string
+  default     = "ap-northeast-1"
+  description = "AWS Region"
+}
+
+# ----------------------------
 #  Fargate Service Variables
 # ----------------------------
 variable "cluster_name" {
-  type        = "string"
+  type        = string
   description = "ECS cluster name"
 }
 
 variable "service_name" {
-  type        = "string"
+  type        = string
   description = "fargate service name"
 }
 
 variable "task_definition_arn" {
-  type        = "string"
+  type        = string
   description = "task definition's arn"
 }
 
 variable "type" {
-  type        = "string"
+  type        = string
   default     = "no"
   description = "fargate service type. load balancer or service discovery or nothing (lb/sd/no)"
 }
 
 variable "assign_public_ip" {
-  type        = "string"
-  default     = "false"
-  description = "assign public ip to the task (true/false)"
+  type        = bool
+  default     = false
+  description = "assign public ip to the task"
 }
 
 variable "deployment_minimum_healthy_percent" {
-  type        = "string"
+  type        = string
   default     = "50"
   description = "minimum percent when deploy"
 }
 
 variable "deployment_maximum_percent" {
-  type        = "string"
+  type        = string
   default     = "200"
   description = "maximum percent when deploy"
 }
 
 variable "task_count" {
-  type        = "string"
+  type        = string
   default     = "1"
   description = "task's desired count & minimum capacity"
 }
 
 variable "task_max_count" {
-  type        = "string"
+  type        = string
   default     = "2"
   description = "task's maximum capacity"
 }
@@ -56,12 +65,12 @@ variable "task_max_count" {
 #  Network Variables
 # ----------------------------
 variable "vpc_id" {
-  type        = "string"
+  type        = string
   description = "vpc's id"
 }
 
 variable "service_subnets" {
-  type        = "list"
+  type        = list(string)
   description = "List of subnet id's to put the task on"
 }
 
@@ -69,56 +78,74 @@ variable "service_subnets" {
 #  Load Balancer Variables
 # ----------------------------
 variable "container_port" {
-  type        = "string"
+  type        = string
   default     = "8080"
   description = "container's port to which target group connect"
 }
 
 variable "container_name" {
-  type        = "string"
+  type        = string
   default     = ""
   description = "container's name to which target group connect"
 }
 
-# TODO: hayashi
 variable "lb_dns" {
-  type        = "string"
+  type        = string
   default     = ""
   description = "load balancer's dns"
 }
 
 variable "deregistration_delay" {
-  type        = "string"
+  type        = string
   default     = "300"
   description = "time for load balancing to wait before deregistering a target"
 }
 
-variable "healthcheck" {
-  type = "map"
+variable "healthy_threshold" {
+  type    = string
+  default = "2"
+}
 
-  default = {
-    healthy_threshold   = 2
-    unhealthy_threshold = 5
-    timeout             = 5
-    protocol            = "HTTP"
-    path                = "/hc"
-    interval            = 30
-    matcher             = 200
-  }
+variable "unhealthy_threshold" {
+  type    = string
+  default = "5"
+}
 
-  description = "target group healthcheck configration"
+variable "healthcheck_timeout" {
+  type    = string
+  default = "5"
+}
+
+variable "healthcheck_protocol" {
+  type    = string
+  default = "HTTP"
+}
+
+variable "healthcheck_path" {
+  type    = string
+  default = "/hc"
+}
+
+variable "healthcheck_interval" {
+  type    = string
+  default = "30"
+}
+
+variable "healthcheck_matcher" {
+  type    = string
+  default = "200"
 }
 
 # ----------------------------
 #  Service Discovery Variables
 # ----------------------------
 variable "dns_namespace_id" {
-  type    = "string"
+  type    = string
   default = ""
 }
 
 variable "dns_ttl" {
-  type    = "string"
+  type    = string
   default = "10"
 }
 
@@ -126,49 +153,50 @@ variable "dns_ttl" {
 #  Auto Scale Variables
 # ----------------------------
 variable "is_mem_scale" {
-  type        = "string"
+  type        = bool
   default     = false
-  description = "scale task by memory usage (true/false)"
+  description = "scale task by memory usage"
 }
 
 variable "mem_target_value" {
-  type        = "string"
+  type        = string
   default     = "40"
   description = "target value of scale task by memory usage (%)"
 }
 
 variable "mem_scale_in_cooldown" {
-  type        = "string"
+  type        = string
   default     = "300"
   description = "cool down time of scale in task by memory usage"
 }
 
 variable "mem_scale_out_cooldown" {
-  type        = "string"
+  type        = string
   default     = "300"
   description = "cool down time of scale out task by memory usage"
 }
 
 variable "is_cpu_scale" {
-  type        = "string"
+  type        = bool
   default     = false
-  description = "scale task by cpu usage (true/false)"
+  description = "scale task by cpu usage"
 }
 
 variable "cpu_target_value" {
-  type        = "string"
+  type        = string
   default     = "40"
   description = "target value of scale task by cpu usage (%)"
 }
 
 variable "cpu_scale_in_cooldown" {
-  type        = "string"
+  type        = string
   default     = "300"
   description = "cool down time of scale in task by cpu usage"
 }
 
 variable "cpu_scale_out_cooldown" {
-  type        = "string"
+  type        = string
   default     = "300"
   description = "cool down time of scale out task by cpu usage"
 }
+
