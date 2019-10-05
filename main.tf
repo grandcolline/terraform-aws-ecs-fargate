@@ -50,7 +50,7 @@ resource "aws_ecs_service" "lb" {
     ]
   }
 
-  tags = merge(local.add_tags, {
+  tags = merge(var.add_tags, {
     Name    = var.service_name
     DnsName = var.lb_dns
   })
@@ -90,7 +90,7 @@ resource "aws_ecs_service" "sd" {
     ]
   }
 
-  tags = merge(local.add_tags, {
+  tags = merge(var.add_tags, {
     Name = var.service_name
   })
 }
@@ -123,7 +123,7 @@ resource "aws_ecs_service" "no" {
     ]
   }
 
-  tags = merge(local.add_tags, {
+  tags = merge(var.add_tags, {
     Name = var.service_name
   })
 }
@@ -150,7 +150,7 @@ resource "aws_security_group" "service" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(local.add_tags, {
+  tags = merge(var.add_tags, {
     Name = var.service_name
   })
 }
