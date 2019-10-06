@@ -55,11 +55,12 @@ module "fargate" {
 
 ## Inputs
 
-### AWS Variables
+### Common Variables
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | region | AWS Region | string | `"ap-northeast-1"` | no |
+| add\_tags | Additional tags | map(string) | `{}` | no |
 
 ### Fargate Variables
 

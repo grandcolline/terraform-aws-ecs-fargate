@@ -29,6 +29,10 @@ module "fargate" {
   type                = "no"
   service_subnets     = [var.service_subnet_id]
   is_cpu_scale        = "true"
+  add_tags = {
+    "ManagedBy"   = "Terraform"
+    "Environment" = "test"
+  }
 }
 
 # -------------------------------

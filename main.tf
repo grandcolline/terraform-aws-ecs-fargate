@@ -50,9 +50,10 @@ resource "aws_ecs_service" "lb" {
     ]
   }
 
-  tags = {
+  tags = merge(var.add_tags, {
+    Name    = var.service_name
     DnsName = var.lb_dns
-  }
+  })
 
   depends_on = [aws_alb_target_group.main]
 }
@@ -88,6 +89,10 @@ resource "aws_ecs_service" "sd" {
       task_definition,
     ]
   }
+
+  tags = merge(var.add_tags, {
+    Name = var.service_name
+  })
 }
 
 # Non Connect Service
@@ -117,6 +122,10 @@ resource "aws_ecs_service" "no" {
       task_definition,
     ]
   }
+
+  tags = merge(var.add_tags, {
+    Name = var.service_name
+  })
 }
 
 # --------------------------------------
@@ -140,6 +149,10 @@ resource "aws_security_group" "service" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = merge(var.add_tags, {
+    Name = var.service_name
+  })
 }
 
 #-------------------------------
