@@ -9,8 +9,13 @@ provider "aws" {
   region = var.region
 }
 
+# get subnet data for getting vpc
+data "aws_subnet" "main" {
+  id = var.service_subnets.0
+}
+
 data "aws_vpc" "main" {
-  id = var.vpc_id
+  id = data.aws_subnet.main.vpc_id
 }
 
 # -------------------------------

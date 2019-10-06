@@ -9,9 +9,6 @@ provider "aws" {
   region = "ap-northeast-1"
 }
 
-variable "vpc_id" {
-}
-
 variable "service_subnet_id" {
 }
 
@@ -25,7 +22,6 @@ module "fargate" {
   task_definition_arn = aws_ecs_task_definition.main.arn
   container_name      = "ecs_demo_app"
   assign_public_ip    = "true"
-  vpc_id              = var.vpc_id
   type                = "no"
   service_subnets     = [var.service_subnet_id]
   is_cpu_scale        = "true"
