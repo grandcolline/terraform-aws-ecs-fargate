@@ -25,7 +25,6 @@ module "fargate" {
   task_definition_arn = aws_ecs_task_definition.main.arn
   container_name      = "ecs_demo_app"
   assign_public_ip    = "true"
-  vpc_id              = var.vpc_id
   type                = "sd"
   service_subnets     = [var.service_subnet_id]
   dns_namespace_id    = aws_service_discovery_private_dns_namespace.main.id

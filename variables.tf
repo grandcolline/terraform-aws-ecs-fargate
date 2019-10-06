@@ -70,11 +70,6 @@ variable "task_max_count" {
 # ----------------------------
 #  Network Variables
 # ----------------------------
-variable "vpc_id" {
-  type        = string
-  description = "vpc's id"
-}
-
 variable "service_subnets" {
   type        = list(string)
   description = "List of subnet id's to put the task on"
