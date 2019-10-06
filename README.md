@@ -40,16 +40,16 @@ These types of resources are supported:
 ```hcl
 module "fargate" {
   source              = "grandcolline/ecs-fargate/aws"
-  version             = "0.2.0"
+  version             = "0.3.0"
   service_name        = "FargateTestService"
-  cluster_name        = "${aws_ecs_cluster.main.name}"
-  task_definition_arn = "${aws_ecs_task_definition.main.arn}"
+  cluster_name        = aws_ecs_cluster.main.name
+  task_definition_arn = aws_ecs_task_definition.main.arn
   container_name      = "ecs_demo_app"
   assign_public_ip    = "true"
-  vpc_id              = "${var.vpc_id}"
+  vpc_id              = var.vpc_id
   type                = "lb"
   service_subnets     = ["${var.service_subnet_id}"]
-  lb_dns              = "${aws_alb.main.dns_name}"
+  lb_dns              = aws_alb.main.dns_name
 }
 ```
 
