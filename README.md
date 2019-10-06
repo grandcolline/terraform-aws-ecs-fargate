@@ -40,13 +40,12 @@ These types of resources are supported:
 ```hcl
 module "fargate" {
   source              = "grandcolline/ecs-fargate/aws"
-  version             = "0.3.0"
+  version             = "1.0.0"
   service_name        = "FargateTestService"
   cluster_name        = aws_ecs_cluster.main.name
   task_definition_arn = aws_ecs_task_definition.main.arn
   container_name      = "ecs_demo_app"
   assign_public_ip    = "true"
-  vpc_id              = var.vpc_id
   type                = "lb"
   service_subnets     = ["${var.service_subnet_id}"]
   lb_dns              = aws_alb.main.dns_name
@@ -79,7 +78,6 @@ module "fargate" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| vpc\_id | vpc's id | string | n/a | yes |
 | service\_subnets | List of subnet id's to put the task on | list | n/a | yes |
 
 ### Load Balancer Variables (`type = lb`)
