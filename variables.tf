@@ -44,26 +44,26 @@ variable assign_public_ip {
 }
 
 variable deployment_minimum_healthy_percent {
-  type        = string
-  default     = "50"
+  type        = number
+  default     = 50
   description = "minimum percent when deploy"
 }
 
 variable deployment_maximum_percent {
-  type        = string
-  default     = "200"
+  type        = number
+  default     = 200
   description = "maximum percent when deploy"
 }
 
 variable task_count {
-  type        = string
-  default     = "1"
+  type        = number
+  default     = 1
   description = "task's desired count & minimum capacity"
 }
 
 variable task_max_count {
-  type        = string
-  default     = "2"
+  type        = number
+  default     = 2
   description = "task's maximum capacity"
 }
 
@@ -97,24 +97,24 @@ variable lb_dns {
 }
 
 variable deregistration_delay {
-  type        = string
-  default     = "300"
+  type        = number
+  default     = 300
   description = "time for load balancing to wait before deregistering a target"
 }
 
 variable healthy_threshold {
-  type    = string
-  default = "2"
+  type    = number
+  default = 2
 }
 
 variable unhealthy_threshold {
-  type    = string
-  default = "5"
+  type    = number
+  default = 5
 }
 
 variable healthcheck_timeout {
-  type    = string
-  default = "5"
+  type    = number
+  default = 5
 }
 
 variable healthcheck_protocol {
@@ -128,13 +128,13 @@ variable healthcheck_path {
 }
 
 variable healthcheck_interval {
-  type    = string
-  default = "30"
+  type    = number
+  default = 30
 }
 
 variable healthcheck_matcher {
-  type    = string
-  default = "200"
+  type    = number
+  default = 200
 }
 
 # ----------------------------
@@ -146,8 +146,8 @@ variable dns_namespace_id {
 }
 
 variable dns_ttl {
-  type    = string
-  default = "10"
+  type    = number
+  default = 10
 }
 
 # ----------------------------
@@ -160,20 +160,20 @@ variable is_mem_scale {
 }
 
 variable mem_target_value {
-  type        = string
-  default     = "40"
+  type        = number
+  default     = 40
   description = "target value of scale task by memory usage (%)"
 }
 
 variable mem_scale_in_cooldown {
-  type        = string
-  default     = "300"
+  type        = number
+  default     = 300
   description = "cool down time of scale in task by memory usage"
 }
 
 variable mem_scale_out_cooldown {
-  type        = string
-  default     = "300"
+  type        = number
+  default     = 300
   description = "cool down time of scale out task by memory usage"
 }
 
@@ -184,20 +184,20 @@ variable is_cpu_scale {
 }
 
 variable cpu_target_value {
-  type        = string
-  default     = "40"
+  type        = number
+  default     = 40
   description = "target value of scale task by cpu usage (%)"
 }
 
 variable cpu_scale_in_cooldown {
-  type        = string
-  default     = "300"
+  type        = number
+  default     = 300
   description = "cool down time of scale in task by cpu usage"
 }
 
 variable cpu_scale_out_cooldown {
-  type        = string
-  default     = "300"
+  type        = number
+  default     = 300
   description = "cool down time of scale out task by cpu usage"
 }
 
