@@ -1,6 +1,6 @@
 # ECS FARGATE
 
-[![CircleCI](https://circleci.com/gh/grandcolline/terraform-aws-ecs-fargate.svg?style=svg&circle-token=42668f1630acdc12ee0b751c880a4424c5c566c1)](https://circleci.com/gh/grandcolline/terraform-aws-ecs-fargate)
+![Terraform](https://github.com/grandcolline/terraform-aws-ecs-fargate/workflows/Terraform/badge.svg)
 
 ## Description
 
