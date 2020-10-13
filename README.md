@@ -40,12 +40,12 @@ These types of resources are supported:
 ```hcl
 module "fargate" {
   source              = "grandcolline/ecs-fargate/aws"
-  version             = "1.0.0"
+  version             = "1.2.0"
   service_name        = "FargateTestService"
   cluster_name        = aws_ecs_cluster.main.name
   task_definition_arn = aws_ecs_task_definition.main.arn
   container_name      = "ecs_demo_app"
-  assign_public_ip    = "true"
+  assign_public_ip    = true
   type                = "lb"
   service_subnets     = ["${var.service_subnet_id}"]
   lb_dns              = aws_alb.main.dns_name
@@ -70,8 +70,8 @@ module "fargate" {
 | task\_count | task's desired count & minimum capacity | string | `"1"` | no |
 | task\_definition\_arn | task definition's arn | string | n/a | yes |
 | type | fargate service type. load balancer or service discovery or nothing (lb/sd/no) | string | `"no"` | no |
-| deployment\_maximum\_percent | maximum percent when deploy | string | `"200"` | no |
-| deployment\_minimum\_healthy\_percent | minimum percent when deploy | string | `"50"` | no |
+| deployment\_maximum\_percent | maximum percent when deploy | number | `200` | no |
+| deployment\_minimum\_healthy\_percent | minimum percent when deploy | number | `50` | no |
 | assign\_public\_ip | assign public ip to the task | bool | `"false"` | no |
 
 ### Network Variables
@@ -86,36 +86,36 @@ module "fargate" {
 |------|-------------|:----:|:-----:|:-----:|
 | container\_name | container's name to which target group connect | string | `""` | no |
 | container\_port | container's port to which target group connect | string | `"8080"` | no |
-| deregistration\_delay | time for load balancing to wait before deregistering a target | string | `"300"` | no |
+| deregistration\_delay | time for load balancing to wait before deregistering a target | number | `300` | no |
 | lb\_dns | load balancer's dns | string | `""` | no |
-| healthy\_threshold | | string | `"2"` | no |
-| unhealthy\_threshold | | string | `"5"` | no |
-| healthcheck\_timeout | | string | `"5"` | no |
+| healthy\_threshold | | number | `2` | no |
+| unhealthy\_threshold | | number | `5` | no |
+| healthcheck\_timeout | | number | `5` | no |
 | healthcheck\_protocol | | string | `"HTTP"` | no |
 | healthcheck\_path | | string | `"/hc"` | no |
-| healthcheck\_interval | | string | `"30"` | no |
-| healthcheck\_matcher | | string | `"200"` | no |
+| healthcheck\_interval | | number | `30` | no |
+| healthcheck\_matcher | | number | `200` | no |
 
 ### Service Discovery Variables (`type = sd`)
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | dns\_namespace\_id || string | `""` | no |
-| dns\_ttl || string | `"10"` | no |
+| dns\_ttl || number | `10` | no |
 
 ### Auto Scalling Variables
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| task\_max\_count | task's maximum capacity | string | `"2"` | no |
+| task\_max\_count | task's maximum capacity | number | `2` | no |
 | is\_mem\_scale | scale task by memory usage | bool | `"false"` | no |
-| mem\_target\_value | target value of scale task by memory usage (%) | string | `"40"` | no |
-| mem\_scale\_in\_cooldown | cool down time of scale in task by memory usage | string | `"300"` | no |
-| mem\_scale\_out\_cooldown | cool down time of scale out task by memory usage | string | `"300"` | no |
+| mem\_target\_value | target value of scale task by memory usage (%) | number | `40` | no |
+| mem\_scale\_in\_cooldown | cool down time of scale in task by memory usage | number | `300` | no |
+| mem\_scale\_out\_cooldown | cool down time of scale out task by memory usage | number | `300` | no |
 | is\_cpu\_scale | scale task by cpu usage | bool | `"false"` | no |
-| cpu\_target\_value | target value of scale task by cpu usage (%) | string | `"40"` | no |
-| cpu\_scale\_in\_cooldown | cool down time of scale in task by cpu usage | string | `"300"` | no |
-| cpu\_scale\_out\_cooldown | cool down time of scale out task by cpu usage | string | `"300"` | no |
+| cpu\_target\_value | target value of scale task by cpu usage (%) | number | `40` | no |
+| cpu\_scale\_in\_cooldown | cool down time of scale in task by cpu usage | number | `300` | no |
+| cpu\_scale\_out\_cooldown | cool down time of scale out task by cpu usage | number | `300` | no |
 
 ## Outputs
 
