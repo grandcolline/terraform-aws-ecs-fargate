@@ -37,8 +37,8 @@ variable type {
   description = "fargate service type. load balancer or service discovery or nothing (lb/sd/no)"
 
   validation {
-    condition     = can(regex("lb|sb|no", var.type))
-    error_message = "The type value must lb, sb or no."
+    condition     = can(regex("lb|sd|no", var.type))
+    error_message = "The type value must lb, sd or no."
   }
 }
 
