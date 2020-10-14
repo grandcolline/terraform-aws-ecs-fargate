@@ -1,12 +1,6 @@
 # ----------------------------
 #  Common Setting
 # ----------------------------
-variable region {
-  type        = string
-  default     = "ap-northeast-1"
-  description = "AWS Region"
-}
-
 variable add_tags {
   type        = map(string)
   default     = {}
