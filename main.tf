@@ -1,10 +1,6 @@
 # -------------------------------
 #  Setting
 # -------------------------------
-provider aws {
-  region = var.region
-}
-
 # get subnet data for getting vpc
 data aws_subnet main {
   id = var.service_subnets.0

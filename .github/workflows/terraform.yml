@@ -2,36 +2,28 @@ name: 'Terraform'
 on:
   - push
 jobs:
-  format:
-    name: 'Format'
+  fmt:
+    name: Fmt
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
-        uses: actions/checkout@master
-      - name: 'Terraform Format'
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 'latest'
-          tf_actions_subcommand: 'fmt'
-          tf_actions_working_dir: '.'
-          tf_actions_comment: false
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Fmt
+      run: terraform fmt -check
+      continue-on-error: true
+
   validate:
-    name: 'Validate'
+    name: Validate
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
-        uses: actions/checkout@master
-      - name: 'Terraform Init'
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 'latest'
-          tf_actions_subcommand: 'init'
-          tf_actions_working_dir: '.'
-          tf_actions_comment: false
-      - name: 'Terraform Validate'
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 'latest'
-          tf_actions_subcommand: 'validate'
-          tf_actions_working_dir: '.'
-          tf_actions_comment: false
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Validate
+      run: terraform validate -no-color
+      env:
+        AWS_DEFAULT_REGION: ap-northeast-1
