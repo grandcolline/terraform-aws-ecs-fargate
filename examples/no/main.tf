@@ -1,16 +1,16 @@
 # -------------------------------
 #  Setting
 # -------------------------------
-provider aws {
+provider "aws" {
   region = "ap-northeast-1"
 }
 
-variable service_subnet_id {}
+variable "service_subnet_id" {}
 
 # -------------------------------
 #  Fargate Module
 # -------------------------------
-module fargate {
+module "fargate" {
   source              = "../../"
   service_name        = "FargateNoTestService"
   cluster_name        = aws_ecs_cluster.main.name
@@ -29,14 +29,14 @@ module fargate {
 # -------------------------------
 #  ECS Cluster
 # -------------------------------
-resource aws_ecs_cluster main {
+resource "aws_ecs_cluster" "main" {
   name = "FargateNoTest"
 }
 
 # -------------------------------
 #  Task Definition
 # -------------------------------
-resource aws_ecs_task_definition main {
+resource "aws_ecs_task_definition" "main" {
   family                   = "ecs_demo_app"
   network_mode             = "awsvpc"
   container_definitions    = data.template_file.app.rendered
@@ -46,7 +46,7 @@ resource aws_ecs_task_definition main {
   memory                   = "512"
 }
 
-data template_file app {
+data "template_file" "app" {
   template = file("./container_definition.tpl.json")
 
   vars = {
@@ -56,13 +56,13 @@ data template_file app {
   }
 }
 
-resource aws_iam_role fargate {
+resource "aws_iam_role" "fargate" {
   name               = "FargateNoTestTaskExcuteRoll"
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.fargate.json
 }
 
-data aws_iam_policy_document fargate {
+data "aws_iam_policy_document" "fargate" {
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -73,7 +73,7 @@ data aws_iam_policy_document fargate {
   }
 }
 
-resource aws_iam_role_policy_attachment fargate {
+resource "aws_iam_role_policy_attachment" "fargate" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
   role       = aws_iam_role.fargate.name
 }
@@ -81,7 +81,7 @@ resource aws_iam_role_policy_attachment fargate {
 # -------------------------------
 #  Log Group
 # -------------------------------
-resource aws_cloudwatch_log_group main {
+resource "aws_cloudwatch_log_group" "main" {
   name              = "FargateNoTest"
   retention_in_days = "1"
 }

@@ -2,11 +2,11 @@
 #  Setting
 # -------------------------------
 # get subnet data for getting vpc
-data aws_subnet main {
+data "aws_subnet" "main" {
   id = var.service_subnets.0
 }
 
-data aws_vpc main {
+data "aws_vpc" "main" {
   id = data.aws_subnet.main.vpc_id
 }
 
@@ -14,7 +14,7 @@ data aws_vpc main {
 #  Service Of Fargate
 # -------------------------------
 # Application Load Balancer Service
-resource aws_ecs_service lb {
+resource "aws_ecs_service" "lb" {
   count = var.type == "lb" ? 1 : 0
 
   name            = var.service_name
@@ -56,7 +56,7 @@ resource aws_ecs_service lb {
 }
 
 # Service Discovery Service
-resource aws_ecs_service sd {
+resource "aws_ecs_service" "sd" {
   count = var.type == "sd" ? 1 : 0
 
   name            = var.service_name
@@ -93,7 +93,7 @@ resource aws_ecs_service sd {
 }
 
 # Non Connect Service
-resource aws_ecs_service no {
+resource "aws_ecs_service" "no" {
   count = var.type == "no" ? 1 : 0
 
   name            = var.service_name
@@ -128,7 +128,7 @@ resource aws_ecs_service no {
 # --------------------------------------
 #  Security Group For Fargate Service
 # --------------------------------------
-resource aws_security_group service {
+resource "aws_security_group" "service" {
   name        = var.service_name
   description = "Security Group For Fargate Of ${var.service_name}"
   vpc_id      = data.aws_vpc.main.id
@@ -155,7 +155,7 @@ resource aws_security_group service {
 #-------------------------------
 # Target Group
 #-------------------------------
-resource aws_alb_target_group main {
+resource "aws_alb_target_group" "main" {
   count = var.type == "lb" ? 1 : 0
 
   name                 = var.service_name
@@ -179,7 +179,7 @@ resource aws_alb_target_group main {
 #-------------------------------
 # Service Discovery
 #-------------------------------
-resource aws_service_discovery_service main {
+resource "aws_service_discovery_service" "main" {
   count = var.type == "sd" ? 1 : 0
 
   name = var.service_name
@@ -202,7 +202,7 @@ resource aws_service_discovery_service main {
 # -------------------------------------
 #  Auto Scaling Target
 # -------------------------------------
-resource aws_appautoscaling_target main {
+resource "aws_appautoscaling_target" "main" {
   count = var.is_mem_scale || var.is_cpu_scale ? 1 : 0
 
   max_capacity       = var.task_max_count
@@ -221,7 +221,7 @@ resource aws_appautoscaling_target main {
 # -------------------------------------
 #  Auto Scaling Policy (Memory)
 # -------------------------------------
-resource aws_appautoscaling_policy mem {
+resource "aws_appautoscaling_policy" "mem" {
   count = var.is_mem_scale ? 1 : 0
 
   name               = "memory"
@@ -246,7 +246,7 @@ resource aws_appautoscaling_policy mem {
 # -------------------------------------
 #  Auto Scaling Policy (CPU)
 # -------------------------------------
-resource aws_appautoscaling_policy cpu {
+resource "aws_appautoscaling_policy" "cpu" {
   count = var.is_cpu_scale ? 1 : 0
 
   name               = "cpu"
