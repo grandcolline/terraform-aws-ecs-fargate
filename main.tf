@@ -23,7 +23,7 @@ resource "aws_ecs_service" "lb" {
   launch_type     = "FARGATE"
 
   desired_count                      = var.task_count
-  deployment_maximum_percent         = var.deployment_maximum_percent
+  deployment_maximum_percent                                  = var.deployment_maximum_percent
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
 
   network_configuration {
